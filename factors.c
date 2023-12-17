@@ -1,12 +1,5 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <time.h> 
 
 int factorize(char *n);
 int main(int argc, char *argv[])
@@ -15,7 +8,7 @@ int main(int argc, char *argv[])
     ssize_t read = 1;
     char *line;
     FILE *file;
-	long long i, num = 0;
+	unsigned long long i, num = 0;
 	int flag = 0;
 
     if (argc != 2)
@@ -32,12 +25,12 @@ int main(int argc, char *argv[])
 
     while ((read = getline(&line, &len, file)) > 0)
 	{
-		num = atoll(line);
+		num = strtoull(line, NULL, 10);
 		for (i = 2; i < num; i++)
 		{
 			if (num % i == 0)
 			{
-				printf("%lld=%lld*%lld\n", num, num/i, i);
+				printf("%llu=%llu*%llu\n", num, num/i, i);
 				break;
 			}
 		}
