@@ -7,40 +7,42 @@
 #include <math.h>
 #include <string.h>
 
+int factorize(char *n);
 int main(int argc, char *argv[])
-{
-	FILE *stream;
-	char *line = NULL;
-	size_t len = 0;
-	long long flag = 1, div, rest, number, counter;
-	ssize_t nread;
+{   
+    size_t len = 0;
+    ssize_t read = 1;
+    char *line;
+    FILE *file;
+	long long i, num = 0;
+	int flag = 0;
 
-	if (argc != 2) {
-		fprintf(stderr, "Usage: %s <file>\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
+    if (argc != 2)
+    {
+        printf("Usage: factor <filename>\n");
+        exit(1);
+    }
+    file = fopen(argv[1], "r");
+    if (file == NULL)
+    {
+        printf("Error opening file!\n");
+        exit(1);
+    }
 
-	stream = fopen(argv[1], "r");
-	if (stream == NULL) {
-		perror("fopen");
-		exit(EXIT_FAILURE);
-	}
-
-	while ((nread = getline(&line, &len, stream)) != -1) {
-		flag = 1, div = 2;
-		number = atoll(line);
-		while (flag) {
-			rest = number % div;
-			if (!rest) {
-				counter = number / div;
-				printf("%lld=%lld*%lld\n", number, counter, div);
-				flag = 0;
+    while ((read = getline(&line, &len, file)) > 0)
+	{
+		num = atoll(line);
+		for (i = 2; i < num; i++)
+		{
+			if (num % i == 0)
+			{
+				printf("%lld=%lld*%lld\n", num, num/i, i);
+				break;
 			}
-			div++;
 		}
+		
 	}
-
 	free(line);
-	fclose(stream);
+	fclose(file);
 	exit(EXIT_SUCCESS);
 }
