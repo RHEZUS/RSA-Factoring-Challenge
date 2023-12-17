@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <time.h> 
 
 int factorize(char *n);
 int main(int argc, char *argv[])
@@ -16,6 +17,9 @@ int main(int argc, char *argv[])
     FILE *file;
 	long long i, num = 0;
 	int flag = 0;
+    clock_t t; 
+
+    t = clock();
 
     if (argc != 2)
     {
@@ -42,6 +46,9 @@ int main(int argc, char *argv[])
 		}
 		
 	}
+    t = clock() - t; 
+    double time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("Execution time: %f seconds\n", time_taken); 
 	free(line);
 	fclose(file);
 	exit(EXIT_SUCCESS);
