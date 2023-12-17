@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     ssize_t read = 1;
     char *line;
     FILE *file;
-	unsigned long long i, num = 0;
+	long long i, num = 0;
 	int flag = 0;
 
     if (argc != 2)
@@ -25,12 +25,12 @@ int main(int argc, char *argv[])
 
     while ((read = getline(&line, &len, file)) > 0)
 	{
-		num = strtoull(line, NULL, 10);
+		num = atoll(line);
 		for (i = 2; i < num; i++)
 		{
 			if (num % i == 0)
 			{
-				printf("%llu=%llu*%llu\n", num, num/i, i);
+				printf("%lld=%lld*%lld\n", num, num/i, i);
 				break;
 			}
 		}
